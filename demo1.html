@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>抽奖</title>
+    <style>
+        * {
+            margin:0;
+            padding:0;
+        }
+        html,body {
+            width:100%;
+            height:100%;
+            overflow:hidden;
+            background:url("images/bg.jpg") no-repeat;
+            background-size:100% 100%;
+        }
+        .cont {
+            width:100%;
+           
+            text-align:center;
+            font-size:30px;
+        }
+        #mr-show {
+            height: 80px;
+            width: 500px;
+            border: none;
+            background: #fff444;
+            border-radius: 50px;
+            font-size: 70px;
+            text-align: center;
+        }
+        .cont span {
+            color:#fff;
+            font-size:50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <input type="text" disabled="disabled" id="mr-show"><br>
+        <span>按下Enter键开始，任意键结束</span>
+    </div>
+</body>
+<script>
+    var rand1;
+    var startFlag = false;
+    document.getElementsByClassName("cont")[0].style.marginTop = (document.getElementsByTagName("body")[0].offsetHeight -
+document.getElementsByClassName("cont")[0].offsetHeight) / 2+"px";
+    function showTel() {
+        phoneNum1 = document.getElementById('mr-show');
+        phoneNum1.value = randomPhoneNumber();
+    }
+    window.onkeydown = function () {
+        if (startFlag == false && event.keyCode == 13) {
+            start();
+            startFlag = true;
+        }
+        if (startFlag == true && event.keyCode != 13) {
+            stop();
+            startFlag = false;
+        }
+    }
+    function stop() {
+        window.clearInterval(rand1);
+    }
+    function start() {
+        rand1 = self.setInterval(showTel, 10);
+        console.log(rand1);
+    }
+    var randomCode = function (len, dict) {
+        var rs = '';
+        for (var i = 0;  i < len; i++)
+            rs += dict.charAt(Math.floor(Math.random() * 100000000) % dict.length);
+        return rs;
+    };
+    var randomPhoneNumber = function () {
+        return [1, randomCode(2, '3458'), '****', randomCode(4, '0123456789')].join('');
+    }
+</script>
+</html>
+ 
